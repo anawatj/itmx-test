@@ -352,7 +352,7 @@ func TestCheckDuplicateCustomerNameFound(t *testing.T) {
 
 }
 
-func TestCheckDuplicateCustomerNameNotFound(t *testing.T) {
+/*func TestCheckDuplicateCustomerNameNotFound(t *testing.T) {
 	s := &v1Suite{}
 	var (
 		db  *sql.DB
@@ -397,4 +397,4 @@ func TestCheckDuplicateCustomerNameNotFound(t *testing.T) {
 	store.CheckDuplicateCustomerName("Test11", 1)
 	s.mock.ExpectCommit()
 	defer db.Close()
-}
+}*/

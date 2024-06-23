@@ -11,17 +11,16 @@ import (
 )
 
 func main() {
-	// get configuration stucts via .env file
+
 	configuration, err := config.NewConfig()
 	if err != nil {
 		panic(err)
 	}
-	// establish DB connection
+
 	db, err := db.ConnectSqlite(configuration.Database)
 	if err != nil {
 		panic(err)
 	}
-	// initialize repos and services using DI
 
 	customerRepo := customerStore.New(db)
 	customerSvc := customers.NewService(customerRepo)

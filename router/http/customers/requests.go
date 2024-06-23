@@ -11,7 +11,6 @@ type CustomerRequest struct {
 	Age  int    `json:"age"`
 }
 
-// Bind validates the JSON payload and returns a Author instance corresponding to the payload.
 func Bind(c *gin.Context) (*customers.Customer, error) {
 	var json CustomerRequest
 	if err := c.ShouldBindJSON(&json); err != nil {
