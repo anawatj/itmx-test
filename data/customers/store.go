@@ -25,38 +25,31 @@ func New(db *gorm.DB) *Store {
 func (s *Store) CreateCustomer(customer *domain.Customer) (*domain.Customer, error) {
 	entity := toDBModel(customer)
 	err := s.DB.Create(entity).Error
-	if err != nil {
-		return nil, err
-	}
-	return toDomainModel(entity), nil
+	return toDomainModel(entity), err
 }
 func (s *Store) GetAllCustomer() ([]domain.Customer, error) {
 	var results []Customer
 	err := s.DB.Find(&results).Error
-	if err != nil {
-		return nil, err
+	var ret []domain.Customer
+	if err == nil {
+		var customers = make([]domain.Customer, len(results))
+		for i, element := range results {
+			customers[i] = *toDomainModel(&element)
+		}
+		ret = customers
 	}
-	var customers = make([]domain.Customer, len(results))
-	for i, element := range results {
-		customers[i] = *toDomainModel(&element)
-	}
-	return customers, nil
+	return ret, err
 }
 func (s *Store) GetByIdCustomer(id int) (*domain.Customer, error) {
 	result := &Customer{}
 	err := s.DB.Where("id = ?", id).First(result).Error
-	if err != nil {
-		return nil, err
-	}
-	return toDomainModel(result), nil
+	return toDomainModel(result), err
 }
 func (s *Store) UpdateCustomer(customer *domain.Customer, id int) (*domain.Customer, error) {
 	entity := toDBModel(customer)
 	err := s.DB.Save(entity).Error
-	if err != nil {
-		return nil, err
-	}
-	return toDomainModel(entity), nil
+
+	return toDomainModel(entity), err
 }
 func (s *Store) DeleteCustomer(id int) error {
 	err := s.DB.Delete(&Customer{Id: id}).Error
