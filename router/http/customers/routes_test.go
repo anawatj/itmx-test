@@ -34,6 +34,7 @@ func TestCreateCustomerApi(t *testing.T) {
 		handler := customers.CustomerHandler{
 			Service: customerServiceMock,
 		}
+		customers.NewRoutesFactory(&gin.RouterGroup)(customerServiceMock)
 		gin.POST("/customers", handler.CreateCustomer)
 		body, err := json.Marshal(mockCustomer)
 		assert.NoError(t, err)
